@@ -19,7 +19,15 @@ namespace {{this}} {
 }
 
 {{classname}}::{{classname}}() {
-    init();
+    {{#vars}}
+    {{#complexType}}
+    {{name}} = nullptr;
+    {{/complexType}}
+    {{^complexType}}
+    {{name}} = {{{defaultValue}}};
+    {{/complexType}}    
+    m_{{name}}_isSet = false;
+    {{/vars}}
 }
 
 {{classname}}::~{{classname}}() {
@@ -81,8 +89,8 @@ void
             for(auto val : varmap.keys()){
                 {{#items.isListContainer}}auto {{name}}_item = new QList<{{items.items.baseType}}{{^items.items.isLong}}{{^items.items.isInteger}}{{^items.items.isDouble}}{{^items.items.isFloat}}{{^items.items.isBoolean}}*{{/items.items.isBoolean}}{{/items.items.isFloat}}{{/items.items.isDouble}}{{/items.items.isInteger}}{{/items.items.isLong}}>();{{/items.isListContainer}}
                 {{#items.isMapContainer}}auto {{name}}_item = new QMap<QString, {{items.items.baseType}}{{^items.items.isLong}}{{^items.items.isInteger}}{{^items.items.isDouble}}{{^items.items.isFloat}}{{^items.items.isBoolean}}*{{/items.items.isBoolean}}{{/items.items.isFloat}}{{/items.items.isDouble}}{{/items.items.isInteger}}{{/items.items.isLong}}>();{{/items.isMapContainer}}
-    		    auto jsonval = QJsonValue::fromVariant(varmap.value(val));
-    		    ::{{cppNamespace}}::setValue((QMap<QString, void *>*)&{{name}}_item, jsonval, "{{items.baseType}}", "{{items.items.baseType}}");
+                auto jsonval = QJsonValue::fromVariant(varmap.value(val));
+                ::{{cppNamespace}}::setValue((QMap<QString, void *>*)&{{name}}_item, jsonval, "{{items.baseType}}", "{{items.items.baseType}}");
 
                 {{name}}->insert({{name}}->end(), val, {{name}}_item);
             }
@@ -98,6 +106,7 @@ QString
 
     QJsonDocument doc(*obj);
     QByteArray bytes = doc.toJson();
+    delete obj;
     return QString(bytes);
 }
 
