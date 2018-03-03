@@ -438,7 +438,7 @@ toJsonArray(QList<void*>* value, QJsonObject* output, QString innerName, QString
     if(innerType.startsWith("{{prefix}}")){
         for(void* obj : *value) {
             {{prefix}}Object *{{prefix}}object = reinterpret_cast<{{prefix}}Object *>(obj);
-            if({{prefix}}object != nullptr) 
+            if({{prefix}}object != nullptr)
             {
                 QJsonObject* o = {{prefix}}object->asJsonObject();
                 outputarray.append(*o);

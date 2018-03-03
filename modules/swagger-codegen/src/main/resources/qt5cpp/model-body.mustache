@@ -25,7 +25,7 @@ namespace {{this}} {
     {{/complexType}}
     {{^complexType}}
     {{name}} = {{{defaultValue}}};
-    {{/complexType}}    
+    {{/complexType}}
     m_{{name}}_isSet = false;
     {{/vars}}
 }
@@ -119,7 +119,7 @@ QJsonObject*
     {{^isString}}
     {{^isDate}}
     {{^isDateTime}}
-    {{^isByteArray}} 
+    {{^isByteArray}}
     if(({{name}} != nullptr) && ({{name}}->isSet())){
         toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }
@@ -144,18 +144,18 @@ QJsonObject*
     {{/isDate}}
     {{/isDateTime}}
     {{/isPrimitiveType}}
-    {{#isDate}}    
-    if({{name}} != nullptr) { 
+    {{#isDate}}
+    if({{name}} != nullptr) {
         toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }
     {{/isDate}}
-    {{#isByteArray}}    
-    if({{name}} != nullptr) { 
+    {{#isByteArray}}
+    if({{name}} != nullptr) {
         obj->insert("{{name}}", QJsonValue(*{{name}}));
     }
     {{/isByteArray}}
-    {{#isDateTime}}   
-    if({{name}} != nullptr) { 
+    {{#isDateTime}}
+    if({{name}} != nullptr) {
         toJsonValue(QString("{{baseName}}"), {{name}}, obj, QString("{{complexType}}"));
     }
     {{/isDateTime}}
