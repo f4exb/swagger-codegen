@@ -15,6 +15,7 @@
 {{/imports}}
 
 #include "{{prefix}}Object.h"
+#include "export.h"
 
 {{#models}}
 {{#model}}
@@ -22,7 +23,7 @@
 namespace {{this}} {
 {{/cppNamespaceDeclarations}}
 
-class {{classname}}: public {{prefix}}Object {
+class {{prefix}}_API {{classname}}: public {{prefix}}Object {
 public:
     {{classname}}();
     {{classname}}(QString* json);
