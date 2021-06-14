@@ -11,7 +11,9 @@ namespace {{this}} {
 
   inline void* create(QString type) {
     {{#models}}{{#model}}if(QString("{{classname}}").compare(type) == 0) {
-      return new {{classname}}();
+      {{classname}} *obj = new {{classname}}();
+      obj->init();
+      return obj;
     }
     {{/model}}{{/models}}
     return nullptr;
