@@ -5,6 +5,7 @@
 #include <QFileInfo>
 #include <QBuffer>
 #include <QtGlobal>
+#include <QRandomGenerator>
 
 
 {{#cppNamespaceDeclarations}}
@@ -44,7 +45,7 @@ void {{prefix}}HttpRequestInput::add_file(QString variable_name, QString local_f
 {{prefix}}HttpRequestWorker::{{prefix}}HttpRequestWorker(QObject *parent)
     : QObject(parent), manager(nullptr)
 {
-    qsrand(QDateTime::currentDateTime().toTime_t());
+    QRandomGenerator::global()->seed(QDateTime::currentDateTime().toTime_t());
 
     manager = new QNetworkAccessManager(this);
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(on_manager_finished(QNetworkReply*)));
@@ -154,7 +155,7 @@ void {{prefix}}HttpRequestWorker::execute({{prefix}}HttpRequestInput *input) {
 
         boundary = "__-----------------------"
             + QString::number(QDateTime::currentDateTime().toTime_t())
-            + QString::number(qrand());
+            + QString::number(QRandomGenerator::global()->generate());
         QString boundary_delimiter = "--";
         QString new_line = "\r\n";
 
