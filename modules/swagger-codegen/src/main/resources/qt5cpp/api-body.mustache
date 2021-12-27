@@ -109,7 +109,7 @@ void
     {{^isContainer}}{{#isString}}
     QString output(*{{paramName}});{{/isString}}{{#isByteArray}}QString output(*{{paramName}});{{/isByteArray}}{{^isString}}{{^isByteArray}}
     QString output = {{paramName}}.asJson();{{/isByteArray}}{{/isString}}
-    input.request_body.append(output);
+    input.request_body.append(output.toUtf8());
     {{/isContainer}}{{/bodyParams}}
 
     {{#headerParams}}
