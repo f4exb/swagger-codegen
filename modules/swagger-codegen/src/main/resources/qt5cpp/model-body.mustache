@@ -164,7 +164,12 @@ QJsonObject*
     {{#isListContainer}}
     if({{name}} && {{name}}->size() > 0){
         {{^items.isContainer}}
+        {{#complexType}}
         toJsonArray((QList<void*>*){{name}}, obj, "{{baseName}}", "{{complexType}}");
+        {{/complexType}}
+        {{^complexType}}
+        toJsonArray((QList<void*>*){{name}}, obj, "{{baseName}}", "{{items.baseType}}");
+        {{/complexType}}
         {{/items.isContainer}}
         {{#items.isContainer}}
         QJsonArray jarray;
